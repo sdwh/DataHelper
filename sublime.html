@@ -36,10 +36,31 @@
     .CodeMirror-linenumbers {
       padding: 0 8px;
     }
+
+    .hotkeys{
+      background-color: #134e8b;
+      color: #eee;
+      margin-top: 1px;
+      padding: 15px;
+      margin-bottom: 1px;
+      font-family: "hack", "consolas";
+    }
   </style>
 </head>
 
 <body>
+  <p class="hotkeys">
+    <span style="font-size:1.5em;">Hotkeys</span>  <br/>
+    Ctrl + Shift + L : Cursors on each lines. <br/>
+    Ctrl + Shift + K : Delete Line. <br/>
+    Ctrl + D : Select Line.<br/>
+    Ctrl + F : Find <br/>
+    Alt + F3 : findAllUnder<br/>
+    Ctrl + Shfit + ↑↓ : Switch Lines.<br/>
+    Ctrl + Shfit + R : Replace All With.
+
+    <!-- codemirror/keymap/sublime.js/line#629 -->
+  </p>
   <article>
 
     <script>
