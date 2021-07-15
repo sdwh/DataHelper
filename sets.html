@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>資料處理線上工具</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/app.css" rel="stylesheet">
+  <style>
+    #mainArea{
+      min-height: 850px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">資料處理愛好者俱樂部</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">一維資料
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="sets.html">集合運算
+                <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="sublime.html" target="_blank">編輯器
+              </a>
+          </li>          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container" id="mainArea">
+
+    <!-- Page Heading -->
+    <!-- <h1 class="my-4">資料處理線上工具
+      <small>Data Processing Online Tool</small>
+    </h1> -->
+    <div class="mb-4"></div>
+    <div class="row">
+      <div class="col-lg-4 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title text-center">
+              <span class="text-primary">左集合</span>
+            </h4>
+            <textarea class="form-control" rows="18" id="leftSet"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title text-center">
+              <span class="text-primary">右集合</span>
+            </h4>
+            <textarea class="form-control" rows="18" id="rightSet"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 portfolio-item">
+          <div class="card h-100 border-danger">
+            <div class="card-body">
+              <h4 class="card-title text-center">
+                <span class="text-danger">運算結果</span>
+              </h4>
+              <textarea class="form-control" rows="18" id="setResult"></textarea>
+            </div>
+          </div>
+        </div>      
+    </div> <!-- /.row -->
+    <div class="row">
+      <div class="col-lg-12">
+        
+        <div class="checkbox mt-1">
+          <label class="mr-3"><input type="radio" name="setRadio" value="union" checked> Union</label>
+          <label class="mr-3"><input type="radio" name="setRadio" value="intersect"> Intersect</label>
+          <label class="mr-3"><input type="radio" name="setRadio" value="diff"> Difference</label>
+          <label class="mr-3"><input type="radio" name="setRadio" value="sym-diff"> Symmertric Difference</label>
+        </div> <!-- end of checkbox -->
+        
+        <div class="form-group row">
+          <label for="setMapFunction" class="col-sm-2 col-form-label">Left Set Map Function</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control text-danger" id="LSmapFunction" placeholder="x => x * 2 + 3" value="x => x">
+          </div>
+          <label for="setMapFunction" class="col-sm-2 col-form-label">Right Set Map Function</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control text-danger" id="RSmapFunction" placeholder="x => x * 2 + 3" value="x => x">
+          </div>
+         </div> <!-- end of from-group section -->
+
+        <button id="setBtn" class="btn btn-primary mt">集合運算</button>
+      </div>
+    </div>
+  </div>
+  <!-- /.container -->
+  <!-- Footer -->
+  <footer class="py-3 bg-dark">
+    <div class="container">
+      
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.29.2/dist/sweetalert2.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+  <script src="./js/jquery.hotkeys.js"></script> <!-- https://github.com/jeresig/jquery.hotkeys -->
+  <script>
+    var pageLock = "page/set";
+  </script>
+  <script src="./js/app.js"></script>
+</body>
+
+</html>
