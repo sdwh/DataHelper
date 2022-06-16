@@ -60,10 +60,18 @@ function readRawText() {
     if ($('#selectDuplicateCheckbox:checkbox:checked').val() == "true") {
         texts = _.uniq(_.filter(texts, (val, i, iteratee) => _.includes(iteratee, val, i + 1)));
     }
-    if ($('#urlDecodeCheckbox:checkbox:checked').val() == "true") {
-        texts = texts.map(x => decodeURI(x).replace(' ','%20'));
-
+    if ($('#urlEncodeCheckbox:checkbox:checked').val() == "true") {
+        texts = texts.map(x => encodeURI(x));
     }
+    if ($('#urlDecodeCheckbox:checkbox:checked').val() == "true") {
+        texts = texts.map(x => decodeURI(x));
+    }
+    if ($('#htmlEncodeCheckbox:checkbox:checked').val() == "true") {
+        texts = texts.map(x => $('<a/>').text(x).html());
+    }
+    if ($('#htmlDecodeCheckbox:checkbox:checked').val() == "true") {
+        texts = texts.map(x => $('<a/>').html(x).text());
+    }    
     if ($('#empIdPadCheckbox:checkbox:checked').val() == "true") {
         texts = texts.map(x => _.padStart(x, 6, '0'));
 
@@ -172,6 +180,10 @@ $(document).ready(function () {
             swal({timer: 650, type: "info", title: "文字處理"});
             $('#textBtn').click();
         });
+        $(document).bind('keydown', 'Alt+4', function () {
+            swal({timer: 650, type: "info", title: "次數統計"});
+            $('#countsBtn').click();
+        });
         $(document).bind('keydown', 'Alt+a', function () {
             $('#mapFunction').focus();
         });
@@ -247,7 +259,20 @@ $(document).ready(function () {
 
             $('#processed').val(_.join(texts, '\n'));
 
-        }); // end of textBTN
+    }); // end of textBTN
+
+    $('#countsBtn').click(function(){
+        texts = readRawText();
+        let counts = {}
+        texts.forEach(e => {
+            counts[e] = counts[e] === undefined ? 1 : counts[e] + 1;
+        });
+
+        res = '';
+        Object.keys(counts).sort().forEach(e => res += `${e},${counts[e]}\n`)
+
+        $('#processed').val(res);
+    })
 
     $('#setBtn').click(
         function () {

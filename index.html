@@ -69,7 +69,7 @@
             <h4 class="card-title">
               <a href="#">原始資料</a>
             </h4>
-            <textarea class="form-control" rows="16" id="raw"></textarea>
+            <textarea class="form-control" rows="16" id="raw" autofocus></textarea>
           </div>
         </div>
       </div>
@@ -120,8 +120,11 @@
         <div class="checkbox mt-1">
           <span class="badge badge-info p-2">字串設定</span>
           <label class="mr-3"><input type="checkbox" value="true" id="empIdPadCheckbox"> 員工編號補碼</label>
-          <label class="mr-3"><input type="checkbox" value="true" id="urlDecodeCheckbox"> URL解碼</label>
           <label class="mr-3"><input type="checkbox" value="true" id="numberingCheckbox"> 編號</label>
+          <label class="mr-3"><input type="checkbox" value="true" id="urlEncodeCheckbox"> URL編碼</label>
+          <label class="mr-3"><input type="checkbox" value="true" id="urlDecodeCheckbox"> URL解碼</label>
+          <label class="mr-3"><input type="checkbox" value="true" id="htmlEncodeCheckbox"> HTML編碼</label>
+          <label class="mr-3"><input type="checkbox" value="true" id="htmlDecodeCheckbox"> HTML解碼</label>
         </div>
         <div class="checkbox mt-1">
           <label class="mr-3"><input type="radio" name="caseRadio" value="raw" checked> 原字體</label>
@@ -139,6 +142,7 @@
         <button id="processBtn" class="btn btn-primary mt">資料數值化</button>
         <button id="statisticBtn" class="btn btn-warning mt">資料摘要</button>
         <button id="textBtn" class="btn btn-info mt">文字處理</button>
+        <button id="countsBtn" class="btn btn-secondary mt">次數統計</button>
         <!-- END OF BUTTON SECTION -->
 
       </div>
@@ -151,7 +155,7 @@
       <a class="text-info font-weight-bold" href="https://sdwh.github.io/about">About Developer</a> /
       <a class="text-info font-weight-bold" href="https://github.com/sdwh/DataHelper">Github</a>
       <div class="float-right">
-        Update: 2020-12-11
+        Update: 2022-06-16
       </div>
     </div>
     <!-- /.container -->
@@ -196,6 +200,7 @@
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.29.2/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html-entities@2.3.3/lib/index.min.js"></script>
   <script src="./js/jquery.hotkeys.js"></script> <!-- https://github.com/jeresig/jquery.hotkeys -->
   <script>
     var pageLock = "page/index";
