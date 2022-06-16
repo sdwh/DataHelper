@@ -2,13 +2,6 @@ const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const pkg = require('./package.json');
 const del = require('del');
-<<<<<<< HEAD
-=======
-const ejs = require("gulp-ejs")
-const rename = require('gulp-rename')
- 
-
->>>>>>> 4cc1299a3b7fc5844066ecaa084e1ba4fd00848b
 
 // Copy third party libraries from /node_modules into /vendor
 gulp.task('vendor', async function() {
@@ -27,15 +20,6 @@ gulp.task('vendor', async function() {
     ])
     .pipe(gulp.dest('./vendor/jquery'))
 
-<<<<<<< HEAD
-=======
-  // ejs
-  gulp.src('./src/*.ejs')
-    .pipe(ejs({ title: 'gulp-ejs' }))
-    .pipe(rename({ extname: '.html' }))
-    .pipe(gulp.dest('./'))    
-
->>>>>>> 4cc1299a3b7fc5844066ecaa084e1ba4fd00848b
 })
 
 // Default task
