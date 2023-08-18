@@ -71,7 +71,7 @@ function readRawText() {
     }
     if ($('#htmlDecodeCheckbox:checkbox:checked').val() == "true") {
         texts = texts.map(x => $('<a/>').html(x).text());
-    }    
+    }
     if ($('#empIdPadCheckbox:checkbox:checked').val() == "true") {
         texts = texts.map(x => _.padStart(x, 6, '0'));
 
@@ -169,26 +169,26 @@ $(document).ready(function () {
             $('#raw').val(_.times(20, i => _.random(1, 100)).join('\n'));
         });
         $(document).bind('keydown', 'Alt+1', function () {
-            swal({timer: 650, type: "info", title: "資料數值化"});
+            swal({ timer: 650, type: "info", title: "資料數值化" });
             $('#processBtn').click();
         });
         $(document).bind('keydown', 'Alt+2', function () {
-            swal({timer: 650, type: "info", title: "資料摘要"});
+            swal({ timer: 650, type: "info", title: "資料摘要" });
             $('#statisticBtn').click();
         });
         $(document).bind('keydown', 'Alt+3', function () {
-            swal({timer: 650, type: "info", title: "文字處理"});
+            swal({ timer: 650, type: "info", title: "文字處理" });
             $('#textBtn').click();
         });
         $(document).bind('keydown', 'Alt+4', function () {
-            swal({timer: 650, type: "info", title: "次數統計"});
+            swal({ timer: 650, type: "info", title: "次數統計" });
             $('#countsBtn').click();
         });
         $(document).bind('keydown', 'Alt+a', function () {
             $('#mapFunction').focus();
         });
         $(document).bind('keydown', 'Alt+r', function () {
-            swal({timer: 650, type: "info", title: "資料移轉"});
+            swal({ timer: 650, type: "info", title: "資料移轉" });
             $('#raw').val($('#processed').val());
             $('#processed').val("");
         });
@@ -207,18 +207,14 @@ $(document).ready(function () {
         });
     }
 
-
-
     $('.form-control').bind('keydown', 'Esc', function () {
         $(this).blur();
     })
 
-    $('#af-select').change(function(){
+    $('#af-select').change(function () {
         var selectedAF = $('#af-select option:selected').val();
         $('#mapFunction').val(selectedAF);
     });
-
-
 
     $(document).bind('keydown', 'Esc', function () {
         window.getSelection().removeAllRanges();
@@ -230,7 +226,6 @@ $(document).ready(function () {
             $('#processed').val(datas.join("\n"));
 
         }); // end of processBtn
-
 
     $('#statisticBtn').click(
         function () {
@@ -259,9 +254,9 @@ $(document).ready(function () {
 
             $('#processed').val(_.join(texts, '\n'));
 
-    }); // end of textBTN
+        }); // end of textBTN
 
-    $('#countsBtn').click(function(){
+    $('#countsBtn').click(function () {
         texts = readRawText();
         let counts = {}
         texts.forEach(e => {
@@ -296,4 +291,18 @@ $(document).ready(function () {
             $('#setResult').val(_.join(result, '\n'));
         }); // end of setBTN
 
+    $('#vlookupBtn').on('click', function () {
+        var datas = $('#raw').val().split("\n").filter(Boolean);
+        var dict = $('#dictionary').val().split("\n").filter(Boolean);
+        var dictionary = _.fromPairs(dict.map(x => x.split(":").map(y => y.trim())));
+        var result = datas.map(x => x + ',' + (dictionary[x] || 'N/A')).join('\n');
+        $('#raw').val(result);
+    });
+
+    $('#swapDictBtn').on('click', function () {
+        var dict = _.compact($('#dictionary').val().split("\n"));
+
+        dict = _.map(dict, x => x.split(":")[1] + ':' + x.split(":")[0]);
+        $('#dictionary').val(_.join(dict, '\n'));
+    }); // end of swapDictBtn
 });

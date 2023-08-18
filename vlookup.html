@@ -10,7 +10,13 @@
   <meta name="author" content="">
 
   <title>資料處理線上工具</title>
-
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -37,21 +43,21 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="index.html">一維資料
-            </a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="sets.html">集合運算
-                <span class="sr-only">(current)</span>
+              <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="sets.html">集合運算
+            </a>
+          </li>
+          <li class="nav-item active">
             <a class="nav-link" href="vlookup.html">資料查閱
             </a>
           </li>
           <li class="nav-item">
               <a class="nav-link" href="sublime.html" target="_blank">編輯器
               </a>
-          </li>          
+          </li>
         </ul>
       </div>
     </div>
@@ -65,65 +71,63 @@
       <small>Data Processing Online Tool</small>
     </h1> -->
     <div class="mb-4"></div>
+
     <div class="row">
-      <div class="col-lg-4 portfolio-item">
+      <div class="col-lg-6 portfolio-item">
         <div class="card h-100 border-primary">
           <div class="card-body">
-            <h4 class="card-title text-center">
-              <span class="text-primary">左集合</span>
+            <h4 class="card-title">
+              <a href="#">查詢資料</a>
             </h4>
-            <textarea class="form-control" rows="18" id="leftSet"></textarea>
+            <textarea class="form-control" rows="16" id="raw" autofocus>115
+114
+115
+106
+112
+115
+110
+108
+109</textarea>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 portfolio-item">
+      <div class="col-lg-6 portfolio-item">
         <div class="card h-100 border-primary">
           <div class="card-body">
-            <h4 class="card-title text-center">
-              <span class="text-primary">右集合</span>
+            <h4 class="card-title">
+              <a href="#">字典物件</a>
             </h4>
-            <textarea class="form-control" rows="18" id="rightSet"></textarea>
+            <textarea class="form-control" rows="16" id="dictionary">100:臺北市中正區
+103:臺北市大同區
+104:臺北市中山區
+105:臺北市松山區
+106:臺北市大安區
+108:臺北市萬華區
+110:臺北市信義區
+111:臺北市士林區
+112:臺北市北投區
+114:臺北市內湖區
+115:臺北市南港區
+116:臺北市文山區</textarea>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 portfolio-item">
-          <div class="card h-100 border-danger">
-            <div class="card-body">
-              <h4 class="card-title text-center">
-                <span class="text-danger">運算結果</span>
-              </h4>
-              <textarea class="form-control" rows="18" id="setResult"></textarea>
-            </div>
-          </div>
-        </div>      
-    </div> <!-- /.row -->
+    </div>
+    <!-- /.row -->
     <div class="row">
       <div class="col-lg-12">
-        
-        <div class="checkbox mt-1">
-          <label class="mr-3"><input type="radio" name="setRadio" value="union" checked> Union</label>
-          <label class="mr-3"><input type="radio" name="setRadio" value="intersect"> Intersect</label>
-          <label class="mr-3"><input type="radio" name="setRadio" value="diff"> Difference</label>
-          <label class="mr-3"><input type="radio" name="setRadio" value="sym-diff"> Symmertric Difference</label>
-        </div> <!-- end of checkbox -->
-        
-        <div class="form-group row">
-          <label for="setMapFunction" class="col-sm-2 col-form-label">Left Set Map Function</label>
-          <div class="col-sm-3">
-            <input type="text" class="form-control text-danger" id="LSmapFunction" placeholder="x => x * 2 + 3" value="x => x">
-          </div>
-          <label for="setMapFunction" class="col-sm-2 col-form-label">Right Set Map Function</label>
-          <div class="col-sm-3">
-            <input type="text" class="form-control text-danger" id="RSmapFunction" placeholder="x => x * 2 + 3" value="x => x">
-          </div>
-         </div> <!-- end of from-group section -->
+        <!-- CHECKBOX SECTION -->
+        <!-- END OF CHECKBOX SECTION -->
 
-        <button id="setBtn" class="btn btn-primary mt">集合運算</button>
+        <!-- BUTTON SECTION -->
+        <button id="vlookupBtn" class="btn btn-info mr-3">查詢處理</button>
+        <button id="swapDictBtn" class="btn btn-success mt">交換字典定義</button>
+        <!-- END OF BUTTON SECTION -->
+
       </div>
     </div>
   </div>
   <!-- /.container -->
-  <!-- Footer -->
   <!-- Footer -->
   <footer class="py-3 bg-dark">
     <div class="container text-white">
@@ -140,10 +144,10 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.29.2/dist/sweetalert2.all.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
   <script src="./js/jquery.hotkeys.js"></script> <!-- https://github.com/jeresig/jquery.hotkeys -->
   <script>
-    var pageLock = "page/set";
+    var pageLock = "page/index";
   </script>
   <script src="./js/app.js"></script>
 </body>
