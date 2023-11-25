@@ -10,7 +10,13 @@
   <meta name="author" content="">
 
   <title>資料處理線上工具</title>
-
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -37,25 +43,25 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" href="index.html">一維資料
+              <span class="sr-only">(current)</span>
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="sets.html">集合運算
-                <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="vlookup.html">資料查閱
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="zipcode.html">郵遞區號
             </a>
           </li>          
           <li class="nav-item">
               <a class="nav-link" href="sublime.html" target="_blank">編輯器
               </a>
-          </li>          
+          </li>
         </ul>
       </div>
     </div>
@@ -69,72 +75,61 @@
       <small>Data Processing Online Tool</small>
     </h1> -->
     <div class="mb-4"></div>
+
     <div class="row">
-      <div class="col-lg-4 portfolio-item">
+      <div class="col-lg-6 portfolio-item">
         <div class="card h-100 border-primary">
           <div class="card-body">
-            <h4 class="card-title text-center">
-              <span class="text-primary">左集合</span>
+            <h4 class="card-title">
+              <a href="#">查詢資料</a>
             </h4>
-            <textarea class="form-control" rows="18" id="leftSet"></textarea>
+            <textarea class="form-control" rows="16" id="raw" autofocus>苗栗縣銅鑼鄉銅科南路6號
+南投縣竹山鎮集山路2段345號
+臺北市大安區羅斯福路4段1號
+嘉義縣太保市故宮大道大道888號
+臺北市中正區南昌路1段1號
+屏東縣瑪家鄉北葉村風景104號
+宜蘭縣宜蘭市復興路2段101號
+金門縣金沙鎮西園里文化路450巷52號
+臺南市東區大學路一號
+新北市淡水區中正路28巷1號
+桃園市大溪區普濟路大道21-3號
+臺中市霧峰區柳豐路500號</textarea>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 portfolio-item">
+      <div class="col-lg-6 portfolio-item">
         <div class="card h-100 border-primary">
           <div class="card-body">
-            <h4 class="card-title text-center">
-              <span class="text-primary">右集合</span>
+            <h4 class="card-title">
+              <a href="#">查詢結果</a>
             </h4>
-            <textarea class="form-control" rows="18" id="rightSet"></textarea>
+            <textarea class="form-control" rows="16" id="dictionary"></textarea>
           </div>
         </div>
       </div>
-      <div class="col-lg-4 portfolio-item">
-          <div class="card h-100 border-danger">
-            <div class="card-body">
-              <h4 class="card-title text-center">
-                <span class="text-danger">運算結果</span>
-              </h4>
-              <textarea class="form-control" rows="18" id="setResult"></textarea>
-            </div>
-          </div>
-        </div>      
-    </div> <!-- /.row -->
+    </div>
+    <!-- /.row -->
     <div class="row">
       <div class="col-lg-12">
-        
-        <div class="checkbox mt-1">
-          <label class="mr-3"><input type="radio" name="setRadio" value="union" checked> Union</label>
-          <label class="mr-3"><input type="radio" name="setRadio" value="intersect"> Intersect</label>
-          <label class="mr-3"><input type="radio" name="setRadio" value="diff"> Difference</label>
-          <label class="mr-3"><input type="radio" name="setRadio" value="sym-diff"> Symmertric Difference</label>
-        </div> <!-- end of checkbox -->
-        
-        <div class="form-group row">
-          <label for="setMapFunction" class="col-sm-2 col-form-label">Left Set Map Function</label>
-          <div class="col-sm-3">
-            <input type="text" class="form-control text-danger" id="LSmapFunction" placeholder="x => x * 2 + 3" value="x => x">
-          </div>
-          <label for="setMapFunction" class="col-sm-2 col-form-label">Right Set Map Function</label>
-          <div class="col-sm-3">
-            <input type="text" class="form-control text-danger" id="RSmapFunction" placeholder="x => x * 2 + 3" value="x => x">
-          </div>
-         </div> <!-- end of from-group section -->
+        <!-- CHECKBOX SECTION -->
+        <!-- END OF CHECKBOX SECTION -->
 
-        <button id="setBtn" class="btn btn-primary mt">集合運算</button>
+        <!-- BUTTON SECTION -->
+        <button id="zipCodeBtn" class="btn btn-info mr-3">郵遞區號查詢</button>
+        <!-- END OF BUTTON SECTION -->
+
       </div>
     </div>
   </div>
   <!-- /.container -->
-  <!-- Footer -->
   <!-- Footer -->
   <footer class="py-3 bg-dark">
     <div class="container text-white">
       <a class="text-info font-weight-bold" href="https://sdwh.github.io/about">About Developer</a> /
       <a class="text-info font-weight-bold" href="https://github.com/sdwh/DataHelper">Github</a>
       <div class="float-right">
-        Update: 2023-08-18
+        Update: 2023-11-25
       </div>
     </div>
     <!-- /.container -->
@@ -144,11 +139,12 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.29.2/dist/sweetalert2.all.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
   <script src="./js/jquery.hotkeys.js"></script> <!-- https://github.com/jeresig/jquery.hotkeys -->
   <script>
-    var pageLock = "page/set";
+    var pageLock = "page/index";
   </script>
+  <script src="./js/zipcode.js"></script>
   <script src="./js/app.js"></script>
 </body>
 

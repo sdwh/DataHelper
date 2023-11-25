@@ -299,6 +299,14 @@ $(document).ready(function () {
         $('#raw').val(result);
     });
 
+    $('#zipCodeBtn').on('click', function () {
+        var datas = $('#raw').val().split("\n").filter(Boolean);
+        var dict = $('#dictionary').val().split("\n").filter(Boolean);
+        var dictionary = _.fromPairs(dict.map(x => x.split(":").map(y => y.trim())));
+        var result = datas.map(x => x + ',' + (zipCodeDict[extractAddr(x)] || 'N/A')).join('\n');
+        $('#dictionary').val(result);
+    });
+
     $('#swapDictBtn').on('click', function () {
         var dict = _.compact($('#dictionary').val().split("\n"));
 
