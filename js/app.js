@@ -299,6 +299,29 @@ $(document).ready(function () {
         $('#raw').val(result);
     });
 
+    $('#repeatReplaceBtn').on('click', function () {
+        var datas = $('#raw').val().split("\n").filter(Boolean);
+        var dict = $('#dictionary').val().split("\n").filter(Boolean);
+        var dictionary = _.fromPairs(dict.map(x => x.split(":").map(y => y.trim())));
+
+        var result = '';
+
+        
+        datas.forEach(data => {
+            for (const key in dictionary){
+                console.log(key)
+                data = data.replaceAll(key, dictionary[key])
+            }
+
+            result = result + data + '\n';
+        });
+
+        console.log(result)
+
+        //var result = datas.map(x => x + ',' + (dictionary[x] || 'N/A')).join('\n');
+        $('#raw').val(result);
+    });
+
     $('#zipCodeBtn').on('click', function () {
         var datas = $('#raw').val().split("\n").filter(Boolean);
         var dict = $('#dictionary').val().split("\n").filter(Boolean);
