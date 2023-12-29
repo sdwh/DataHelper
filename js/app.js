@@ -303,7 +303,7 @@ $(document).ready(function () {
         var datas = $('#raw').val().split("\n").filter(Boolean);
         var dict = $('#dictionary').val().split("\n").filter(Boolean);
         var dictionary = _.fromPairs(dict.map(x => x.split(":").map(y => y.trim())));
-        var result = datas.map(x => x + ',' + (zipCodeDict[extractAddr(x)] || 'N/A')).join('\n');
+        var result = datas.map(x => x + ', ' + (zipCodeDict[extractAddr(x)] || 'N/A')).join('\n');
         $('#dictionary').val(result);
     });
 
@@ -313,4 +313,25 @@ $(document).ready(function () {
         dict = _.map(dict, x => x.split(":")[1] + ':' + x.split(":")[0]);
         $('#dictionary').val(_.join(dict, '\n'));
     }); // end of swapDictBtn
+
+    $('#fstringBtn').on('click', function () {
+        var template = $('#template').val();
+        var datas = $('#paddingdata').val().split("\n").filter(Boolean);
+        var res = '';
+        datas.forEach(row => {
+            let current = template;
+            row.split(',').forEach(e => {
+                current = current.replace('{}', e.trim())
+            });
+            res += current + '\n';
+        });
+        console.log(res);
+        $('#result').val(res);
+        /*
+        var dict = $('#dictionary').val().split("\n").filter(Boolean);
+        var dictionary = _.fromPairs(dict.map(x => x.split(":").map(y => y.trim())));
+        var result = datas.map(x => x + ',' + (dictionary[x] || 'N/A')).join('\n');
+        $('#raw').val(result);
+        */
+    });    
 });

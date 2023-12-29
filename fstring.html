@@ -50,7 +50,7 @@
             <a class="nav-link" href="sets.html">集合運算
             </a>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="vlookup.html">資料查閱
             </a>
           </li>
@@ -58,7 +58,7 @@
             <a class="nav-link" href="zipcode.html">郵遞區號
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="fstring.html">字串格式化
             </a>
           </li>
@@ -81,59 +81,57 @@
     <div class="mb-4"></div>
 
     <div class="row">
-      <div class="col-lg-6 portfolio-item">
+      <div class="col-lg-12 portfolio-item">
         <div class="card h-100 border-primary">
           <div class="card-body">
             <h4 class="card-title">
-              <a href="#">查詢資料</a>
+              <a href="#">字串格式</a>
             </h4>
-            <textarea class="form-control" rows="16" id="raw" autofocus>115
-114
-115
-106
-112
-115
-110
-108
-109</textarea>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6 portfolio-item">
-        <div class="card h-100 border-primary">
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">字典物件</a>
-            </h4>
-            <textarea class="form-control" rows="16" id="dictionary">100:臺北市中正區
-103:臺北市大同區
-104:臺北市中山區
-105:臺北市松山區
-106:臺北市大安區
-108:臺北市萬華區
-110:臺北市信義區
-111:臺北市士林區
-112:臺北市北投區
-114:臺北市內湖區
-115:臺北市南港區
-116:臺北市文山區</textarea>
+            <textarea class="form-control" style="font-size: 20px" rows="2" id="template" autofocus>This is an {} examble, {}.</textarea>
           </div>
         </div>
       </div>
     </div>
-    <!-- /.row -->
+
     <div class="row">
+      <div class="col-lg-12 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#">填充資料</a>
+            </h4>
+            <textarea class="form-control" rows="4" id="paddingdata">a,b
+c,d
+e,f</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
       <div class="col-lg-12">
         <!-- CHECKBOX SECTION -->
         <!-- END OF CHECKBOX SECTION -->
 
         <!-- BUTTON SECTION -->
-        <button id="vlookupBtn" class="btn btn-info mr-3">查詢處理</button>
-        <button id="swapDictBtn" class="btn btn-success mt">交換字典定義</button>
+        <button id="fstringBtn" class="btn btn-info mr-3">格式化字串</button>
         <!-- END OF BUTTON SECTION -->
-
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-lg-12 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#">格式化結果</a>
+            </h4>
+            <textarea class="form-control" rows="20" id="result"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
   </div>
   <!-- /.container -->
   <!-- Footer -->
@@ -142,7 +140,7 @@
       <a class="text-info font-weight-bold" href="https://sdwh.github.io/about">About Developer</a> /
       <a class="text-info font-weight-bold" href="https://github.com/sdwh/DataHelper">Github</a>
       <div class="float-right">
-        Update: 2023-08-18
+        Update: 2023-12-29
       </div>
     </div>
     <!-- /.container -->
