@@ -306,7 +306,7 @@ $(document).ready(function () {
 
         var result = '';
 
-        
+
         datas.forEach(data => {
             for (const key in dictionary){
                 console.log(key)
@@ -348,13 +348,25 @@ $(document).ready(function () {
             });
             res += current + '\n';
         });
-        console.log(res);
         $('#result').val(res);
-        /*
-        var dict = $('#dictionary').val().split("\n").filter(Boolean);
-        var dictionary = _.fromPairs(dict.map(x => x.split(":").map(y => y.trim())));
-        var result = datas.map(x => x + ',' + (dictionary[x] || 'N/A')).join('\n');
-        $('#raw').val(result);
-        */
-    });    
+    });
+
+    $('#fstringJsonBtn').on('click', function () {
+        var template = '`' + $('#template').val() + '`';
+        var datas = JSON.parse($('#paddingdata').val());
+        var dataFilter = $('#dataFilter').val();
+        console.log(dataFilter);
+        var res = '';
+
+        datas.filter(eval(dataFilter)).forEach((e) => {
+            const interpolatedString = eval(template);
+            res += interpolatedString + '\n';
+          });
+
+        $('#result').val(res);
+    });
+
+    $('#jsonPaddingNoFilterBtn').on('click', function(){
+        $('#dataFilter').val('e => e');
+    });
 });

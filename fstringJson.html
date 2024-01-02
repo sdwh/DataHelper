@@ -85,9 +85,9 @@
         <div class="card h-100 border-primary">
           <div class="card-body">
             <h4 class="card-title">
-              <a href="#">字串格式</a>
+              <a href="#">字串格式 Interpolated String </a>
             </h4>
-            <textarea class="form-control" style="font-size: 20px" rows="2" id="template" autofocus>This is an {} examble, {}.</textarea>
+            <textarea class="form-control" style="font-size: 20px" rows="2" id="template" autofocus>${e.name} is lv.${e.level}.</textarea>
           </div>
         </div>
       </div>
@@ -98,25 +98,38 @@
         <div class="card h-100 border-primary">
           <div class="card-body">
             <h4 class="card-title">
-              <a href="#">填充資料</a>
+              <a href="#">填充資料 JSON.parse</a>
             </h4>
-            <textarea class="form-control" rows="4" id="paddingdata">a,b
-c,d
-e,f</textarea>
+            <textarea class="form-control" rows="4" id="paddingdata">[{"name": "alice", "level": 5},
+{"name": "bob", "level": 3},
+{"name": "charlie", "level": 6}]</textarea>
           </div>
         </div>
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-lg-12 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#">篩選資料 Array.prototype.filter</a>
+            </h4>
+            <input type="text" class="form-control" id="dataFilter" value="e => e.level > 3 && e.name.startsWith('a')"></input>
+            
+            <p class="border p-2 rounded mt-3">如果不需要篩選資料，保持為 <button class="btn btn-secondary btn-sm" id="jsonPaddingNoFilterBtn">e => e</button> 即可</p>
+          </div>
+        </div>
+      </div>
+    </div>    
+
     <div class="row mb-3">
       <div class="col-lg-12">
-        <!-- CHECKBOX SECTION -->
-        <!-- END OF CHECKBOX SECTION -->
 
         <!-- BUTTON SECTION -->
-        <button id="fstringBtn" class="btn btn-info mr-3">格式化字串</button>
+        <button id="fstringJsonBtn" class="btn btn-info mr-3">格式化字串</button>
         <!-- END OF BUTTON SECTION -->
-        <a href="fstringJson.html" class="btn btn-warning">Switch to Json Padding</a>
+        <a href="fstring.html" class="btn btn-danger">Switch to CSV Padding</a>
       </div>
     </div>
 
