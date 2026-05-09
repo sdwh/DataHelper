@@ -19,6 +19,8 @@
   <meta name="theme-color" content="#ffffff">
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="vendor/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="css/app.css" rel="stylesheet">
@@ -34,7 +36,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">資料處理愛好者俱樂部</a>
+      <a class="navbar-brand" href="#"><i class="bi bi-database-fill"></i> 資料處理愛好者俱樂部</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -42,28 +44,28 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.html">一維資料
+            <a class="nav-link" href="index.html"><i class="bi bi-list-ol"></i> 一維資料
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="sets.html">集合運算
+            <a class="nav-link" href="sets.html"><i class="bi bi-intersect"></i> 集合運算
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="vlookup.html">資料查閱
+            <a class="nav-link" href="vlookup.html"><i class="bi bi-search"></i> 資料查閱
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="zipcode.html">郵遞區號
+            <a class="nav-link" href="zipcode.html"><i class="bi bi-geo-alt"></i> 郵遞區號
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="fstring.html">字串格式化
+            <a class="nav-link" href="fstring.html"><i class="bi bi-braces"></i> 字串格式化
             </a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="sublime.html" target="_blank">編輯器
+              <a class="nav-link" href="sublime.html" target="_blank"><i class="bi bi-pencil-square"></i> 編輯器
               </a>
           </li>
         </ul>
@@ -85,7 +87,7 @@
         <div class="card h-100 border-primary">
           <div class="card-body">
             <h4 class="card-title">
-              <a href="#">原始資料</a>
+              <a href="#"><i class="bi bi-input-cursor-text text-primary"></i> 原始資料</a>
             </h4>
             <textarea class="form-control" rows="16" id="raw" autofocus></textarea>
           </div>
@@ -95,7 +97,7 @@
         <div class="card h-100 border-primary">
           <div class="card-body">
             <h4 class="card-title">
-              <a href="#">處理後的資料</a>
+              <a href="#"><i class="bi bi-file-earmark-text text-success"></i> 處理後的資料</a>
             </h4>
             <textarea class="form-control" rows="16" id="processed"></textarea>
           </div>
@@ -107,14 +109,14 @@
       <div class="col-lg-12">
         <!-- CHECKBOX SECTION -->
         <div class="checkbox mt-1">
-          <span class="badge badge-secondary p-2">共用設定</span>
+          <span class="badge badge-secondary p-2"><i class="bi bi-gear"></i> 共用設定</span>
           <label class="mr-3"><input type="checkbox" value="true" id="selectDuplicateCheckbox"> 篩選重複</label>
           <label class="mr-3"><input type="checkbox" value="true" id="uniqCheckbox"> 刪除重複</label>
           <label class="mr-3"><input type="checkbox" value="true" id="sortCheckbox"> 排序</label>
           <label class="mr-3"><input type="checkbox" value="true" id="reverseCheckbox"> 反向排序</label>
         </div>
         <div class="checkbox mt-1">
-          <span class="badge badge-primary p-2">數值設定</span>
+          <span class="badge badge-primary p-2"><i class="bi bi-calculator"></i> 數值設定</span>
           <label class="mr-3"><input type="checkbox" value="true" id="absCheckbox"> 取絕對值</label>
           <label class="mr-3"><input type="checkbox" value="true" id="digitsCheckbox"> 僅保留純粹數字</label>
         </div>
@@ -136,7 +138,7 @@
           </button>
         </div>
         <div class="checkbox mt-1">
-          <span class="badge badge-info p-2">字串設定</span>
+          <span class="badge badge-info p-2"><i class="bi bi-fonts"></i> 字串設定</span>
           <label class="mr-3"><input type="checkbox" value="true" id="empIdPadCheckbox"> 員工編號補碼</label>
           <label class="mr-3"><input type="checkbox" value="true" id="numberingCheckbox"> 編號</label>
           <label class="mr-3"><input type="checkbox" value="true" id="urlEncodeCheckbox"> URL編碼</label>
@@ -157,10 +159,10 @@
         <!-- END OF CHECKBOX SECTION -->
 
         <!-- BUTTON SECTION -->
-        <button id="processBtn" class="btn btn-primary mt">資料數值化</button>
-        <button id="statisticBtn" class="btn btn-warning mt">資料摘要</button>
-        <button id="textBtn" class="btn btn-info mt">文字處理</button>
-        <button id="countsBtn" class="btn btn-secondary mt">次數統計</button>
+        <button id="processBtn" class="btn btn-primary mt"><i class="bi bi-calculator"></i> 資料數值化</button>
+        <button id="statisticBtn" class="btn btn-warning mt"><i class="bi bi-bar-chart"></i> 資料摘要</button>
+        <button id="textBtn" class="btn btn-info mt"><i class="bi bi-fonts"></i> 文字處理</button>
+        <button id="countsBtn" class="btn btn-secondary mt"><i class="bi bi-list-ol"></i> 次數統計</button>
         <!-- END OF BUTTON SECTION -->
 
       </div>
@@ -170,8 +172,8 @@
   <!-- Footer -->
   <footer class="py-3 bg-dark">
     <div class="container text-white">
-      <a class="text-info font-weight-bold" href="https://sdwh.github.io/about">About Developer</a> /
-      <a class="text-info font-weight-bold" href="https://github.com/sdwh/DataHelper">Github</a>
+      <a class="text-info font-weight-bold" href="https://sdwh.github.io/about"><i class="bi bi-person-circle"></i> About Developer</a> /
+      <a class="text-info font-weight-bold" href="https://github.com/sdwh/DataHelper"><i class="bi bi-github"></i> Github</a>
       <div class="float-right">
         Update: 2023-08-18
       </div>
