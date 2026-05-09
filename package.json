@@ -1,0 +1,39 @@
+{
+    "title": "2 Col Portfolio",
+    "name": "startbootstrap-2-col-portfolio",
+    "version": "4.1.1",
+    "description": "A two column portfolio HTML template built with Bootstrap",
+    "keywords": [
+        "css",
+        "sass",
+        "html",
+        "responsive",
+        "theme",
+        "template"
+    ],
+    "homepage": "https://startbootstrap.com/template-overviews/2-col-portfolio",
+    "bugs": {
+        "url": "https://github.com/BlackrockDigital/startbootstrap-2-col-portfolio/issues",
+        "email": "feedback@startbootstrap.com"
+    },
+    "license": "MIT",
+    "author": "Start Bootstrap",
+    "contributors": [
+        "David Miller (http://davidmiller.io/)"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/BlackrockDigital/startbootstrap-2-col-portfolio.git"
+    },
+    "dependencies": {
+        "bootstrap": "^4.6.2",
+        "del": "^6.0.0",
+        "jquery": "^3.7.1",
+        "lodash": "^4.17.21",
+        "sweetalert": "^2.1.2"
+    },
+    "devDependencies": {
+        "browser-sync": "^3.0.4",
+        "gulp": "^5.0.1"
+    }
+}

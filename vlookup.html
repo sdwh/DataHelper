@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>資料處理線上工具</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/app.css" rel="stylesheet">
+  <style>
+    #mainArea{
+      min-height: 850px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">資料處理愛好者俱樂部</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">一維資料
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="sets.html">集合運算
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="vlookup.html">資料查閱
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="zipcode.html">郵遞區號
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fstring.html">字串格式化
+            </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="sublime.html" target="_blank">編輯器
+              </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container" id="mainArea">
+
+    <!-- Page Heading -->
+    <!-- <h1 class="my-4">資料處理線上工具
+      <small>Data Processing Online Tool</small>
+    </h1> -->
+    <div class="mb-4"></div>
+
+    <div class="row">
+      <div class="col-lg-6 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#">查詢資料</a>
+            </h4>
+            <textarea class="form-control" rows="16" id="raw" autofocus>115
+114
+115
+106
+112
+115
+110
+from 100 goto 105 then 100
+109</textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#">字典物件</a>
+            </h4>
+            <textarea class="form-control" rows="16" id="dictionary">100:臺北市中正區
+103:臺北市大同區
+104:臺北市中山區
+105:臺北市松山區
+106:臺北市大安區
+108:臺北市萬華區
+110:臺北市信義區
+111:臺北市士林區
+112:臺北市北投區
+114:臺北市內湖區
+115:臺北市南港區
+116:臺北市文山區</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-lg-12">
+        <p class="border p-2 rounded">查詢處理是使用 Key 完全一致的比對，連續字串取代則是檢查所有的字典物件，符合的 Key 使用 replaceAll 的方式更新來源資料 😘</p>
+
+        <!-- BUTTON SECTION -->
+        <button id="vlookupBtn" class="btn btn-info mr-3">查詢處理</button>
+        <button id="repeatReplaceBtn" class="btn btn-primary mr-3">連續字串取代</button>
+        <button id="swapDictBtn" class="btn btn-success mt">交換字典定義</button>
+        <!-- END OF BUTTON SECTION -->
+
+      </div>
+    </div>
+  </div>
+  <!-- /.container -->
+  <!-- Footer -->
+  <footer class="py-3 bg-dark">
+    <div class="container text-white">
+      <a class="text-info font-weight-bold" href="https://sdwh.github.io/about">About Developer</a> /
+      <a class="text-info font-weight-bold" href="https://github.com/sdwh/DataHelper">Github</a>
+      <div class="float-right">
+        Update: 2023-08-18
+      </div>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/sweetalert/sweetalert.min.js"></script>
+  <script src="vendor/lodash/lodash.min.js"></script>
+  <script src="./js/jquery.hotkeys.js"></script> <!-- https://github.com/jeresig/jquery.hotkeys -->
+  <script>
+    var pageLock = "page/index";
+  </script>
+  <script src="./js/app.js"></script>
+</body>
+
+</html>

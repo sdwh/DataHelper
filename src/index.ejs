@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./components/header'); -%>
+
+<body>
+  <%- include('./components/navigation'); -%>
+
+  <!-- Page Content -->
+  <div class="container" id="mainArea">
+
+    <!-- Page Heading -->
+    <div class="mb-4"></div>
+
+    <div class="row">
+      <div class="col-lg-6 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#">原始資料</a>
+            </h4>
+            <textarea class="form-control" rows="16" id="raw"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#">處理後的資料</a>
+            </h4>
+            <textarea class="form-control" rows="16" id="processed"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-lg-12">
+        <!-- CHECKBOX SECTION -->
+        <div class="checkbox mt-1">
+          <span class="badge badge-secondary p-2">共用設定</span>
+          <label class="mr-3"><input type="checkbox" value="true" id="selectDuplicateCheckbox"> 篩選重複</label>
+          <label class="mr-3"><input type="checkbox" value="true" id="uniqCheckbox"> 刪除重複</label>
+          <label class="mr-3"><input type="checkbox" value="true" id="sortCheckbox"> 排序</label>
+          <label class="mr-3"><input type="checkbox" value="true" id="reverseCheckbox"> 反向排序</label>
+        </div>
+        <div class="checkbox mt-1">
+          <span class="badge badge-primary p-2">數值設定</span>
+          <label class="mr-3"><input type="checkbox" value="true" id="absCheckbox"> 取絕對值</label>
+          <label class="mr-3"><input type="checkbox" value="true" id="digitsCheckbox"> 僅保留純粹數字</label>
+        </div>
+        <div class="form-group row">
+          <label for="numbeRange" class="col-sm-2 col-form-label">數值範圍限制</label>
+          <div class="col-sm-2">
+            <input type="number" class="form-control" id="rangeControlMin" placeholder="Min">
+          </div>
+          <div class="col-sm-2">
+            <input type="number" class="form-control" id="rangeControlMax" placeholder="Max">
+          </div>
+          <label for="numbeRange" class="col-sm-2 col-form-label">Map Function</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control text-danger" id="mapFunction" placeholder="x => x * 2 + 3" value="x => x">
+          </div>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modelId">
+            匿名函式
+          </button>
+        </div>
+        <div class="checkbox mt-1">
+          <span class="badge badge-info p-2">字串設定</span>
+          <label class="mr-3"><input type="checkbox" value="true" id="empIdPadCheckbox"> 員工編號補碼</label>
+          <label class="mr-3"><input type="checkbox" value="true" id="urlDecodeCheckbox"> URL解碼</label>
+          <label class="mr-3"><input type="checkbox" value="true" id="numberingCheckbox"> 編號</label>
+        </div>
+        <div class="checkbox mt-1">
+          <label class="mr-3"><input type="radio" name="caseRadio" value="raw" checked> 原字體</label>
+          <label class="mr-3"><input type="radio" name="caseRadio" value="capitalize"> 行首大寫</label>
+          <label class="mr-3"><input type="radio" name="caseRadio" value="start"> 首字大寫</label>
+          <label class="mr-3"><input type="radio" name="caseRadio" value="camel"> 駝峰式命名</label>
+          <label class="mr-3"><input type="radio" name="caseRadio" value="upper"> 字串大寫化</label>
+          <label class="mr-3"><input type="radio" name="caseRadio" value="lower"> 字串小寫化</label>
+          <label class="mr-3"><input type="radio" name="caseRadio" value="snake"> Snake Case</label>
+          <label class="mr-3"><input type="radio" name="caseRadio" value="kebab"> kebab Case</label>
+        </div>
+        <!-- END OF CHECKBOX SECTION -->
+
+        <!-- BUTTON SECTION -->
+        <button id="processBtn" class="btn btn-primary mt">資料數值化</button>
+        <button id="statisticBtn" class="btn btn-warning mt">資料摘要</button>
+        <button id="textBtn" class="btn btn-info mt">文字處理</button>
+        <!-- END OF BUTTON SECTION -->
+
+      </div>
+    </div>
+  </div>
+  <!-- /.container -->
+
+  <%- include('./components/footer'); -%>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger">常用匿名函式選擇</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="form-group">
+              <label for=""></label>
+              <select class="custom-select" name="" id="af-select">
+                <option vslue="x => x" selected>x => x</option>
+                <option value="x => x.length">x => x.length, 轉換長度</option>
+                <option value="x => x.replace(/regx/ig, 'replace')">x => x.replace(/regx/ig, 'replace'), 字串取代</option>
+                <option value='x => x.substr(0, 5)''>x => x.substr(0, 5), 子字串</option>
+                <option value='x => x.split(",")''>x => x.split(","), 字串切割</option>
+                <option value='x => x.split("\t")''>x => x.split("\t"), 字串切割</option>
+                <option value='x => x + ","'>x => x + ",", 字串添加</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./components/scripts'); -%>
+</body>
+
+</html>
