@@ -264,7 +264,7 @@ $(document).ready(function () {
         });
 
         res = '';
-        Object.keys(counts).sort().forEach(e => res += `${e},${counts[e]}\n`)
+        Object.keys(counts).sort((a, b) => counts[b] - counts[a]).forEach(e => res += `${counts[e]},${e}\n`)
 
         $('#processed').val(res);
     })
