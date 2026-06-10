@@ -83,6 +83,7 @@
               <span class="text-primary"><i class="bi bi-circle-half"></i> 左集合</span>
             </h4>
             <textarea class="form-control" rows="18" id="leftSet"></textarea>
+            <small class="ml-2 text-muted" id="leftSetCount"></small>
           </div>
         </div>
       </div>
@@ -93,6 +94,7 @@
               <span class="text-primary"><i class="bi bi-circle-half" style="transform:scaleX(-1);display:inline-block"></i> 右集合</span>
             </h4>
             <textarea class="form-control" rows="18" id="rightSet"></textarea>
+            <small class="ml-2 text-muted" id="rightSetCount"></small>
           </div>
         </div>
       </div>
@@ -103,6 +105,7 @@
                 <span class="text-danger"><i class="bi bi-calculator"></i> 運算結果</span>
               </h4>
               <textarea class="form-control" rows="18" id="setResult"></textarea>
+              <small class="ml-2 text-muted" id="setResultCount"></small>
             </div>
           </div>
         </div>
@@ -156,6 +159,36 @@
     var pageLock = "page/set";
   </script>
   <script src="./js/app.js"></script>
+  <script>
+    function updateSetCount(textareaId, countId) {
+      var lines = $('#' + textareaId).val().split('\n').map(x => x.trim()).filter(Boolean);
+      var total = lines.length;
+      var unique = _.uniq(lines).length;
+      if (total === 0) {
+        $('#' + countId).text('');
+      } else {
+        $('#' + countId).text('共 ' + total + ' 筆 / 不重複 ' + unique + ' 筆');
+      }
+    }
+    function updateAllSetCounts() {
+      updateSetCount('leftSet', 'leftSetCount');
+      updateSetCount('rightSet', 'rightSetCount');
+      updateSetCount('setResult', 'setResultCount');
+    }
+    $('#leftSet, #rightSet').on('input', function () {
+      var id = $(this).attr('id');
+      var countId = id + 'Count';
+      updateSetCount(id, countId);
+    });
+    $('#setResult').on('input', function () {
+      updateSetCount('setResult', 'setResultCount');
+    });
+    // Update result count after set operation
+    $('#setBtn').on('click', function () {
+      setTimeout(function () { updateSetCount('setResult', 'setResultCount'); }, 0);
+    });
+    updateAllSetCounts();
+  </script>
 </body>
 
 </html>
