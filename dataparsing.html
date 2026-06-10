@@ -137,7 +137,7 @@ Eve,Marketing,Taichung</textarea>
           <div class="col-sm-2">
             <select class="form-control" id="delimiterSelect">
               <option value="," selected>逗號 (,)</option>
-              <option value="&#9;">Tab</option>
+              <option value="tab">Tab</option>
               <option value=";">分號 (;)</option>
               <option value="|">管線 (|)</option>
               <option value=" ">空白 ( )</option>
@@ -300,8 +300,33 @@ Eve,Marketing,Taichung</textarea>
         if (sel === 'custom') {
           return $('#customDelimiter').val() || ',';
         }
+        if (sel === 'tab') return '\t';
         return sel;
       }
+
+      // Auto-detect delimiter from raw data
+      function autoDetectDelimiter(text) {
+        var firstLine = text.split('\n')[0] || '';
+        var candidates = [
+          { value: 'tab', count: (firstLine.match(/\t/g) || []).length },
+          { value: ',', count: (firstLine.match(/,/g) || []).length },
+          { value: ';', count: (firstLine.match(/;/g) || []).length },
+          { value: '|', count: (firstLine.match(/\|/g) || []).length }
+        ];
+        candidates.sort(function (a, b) { return b.count - a.count; });
+        if (candidates[0].count > 0) {
+          var best = candidates[0].value;
+          $('#delimiterSelect').val(best);
+          $('#customDelimiterGroup').hide();
+        }
+      }
+
+      $('#csvRaw').on('paste', function () {
+        var self = this;
+        setTimeout(function () {
+          autoDetectDelimiter($(self).val());
+        }, 0);
+      });
 
       // Select all / deselect all
       $(document).on('click', '#selectAllBtn', function () {
@@ -530,10 +555,11 @@ Eve,Marketing,Taichung</textarea>
         var raw = $('#csvRaw').val();
         if (!raw.trim()) return;
 
+        var delimiter = getDelimiter();
         var lines = raw.split('\n');
         flattenedData = [];
         lines.forEach(function (line) {
-          var cells = line.split('\t');
+          var cells = line.split(delimiter);
           cells.forEach(function (cell) {
             var val = cell.trim();
             if (val) flattenedData.push(val);
