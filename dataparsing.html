@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>資料處理線上工具</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="vendor/bootstrap-icons/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/app.css" rel="stylesheet">
+  <style>
+    #mainArea {
+      min-height: 850px;
+    }
+    .col-header {
+      cursor: pointer;
+      user-select: none;
+    }
+    .col-header:hover {
+      background-color: #e9ecef;
+    }
+    .col-badge {
+      font-size: 0.75rem;
+    }
+    #parsedTable {
+      font-size: 0.9rem;
+    }
+    #parsedTable th {
+      position: relative;
+      white-space: nowrap;
+    }
+    #parsedTable td {
+      white-space: nowrap;
+    }
+    .swap-indicator {
+      border: 2px dashed #007bff !important;
+    }
+    #topScrollbar {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    #topScrollbar > div {
+      height: 1px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#"><i class="bi bi-database-fill"></i> 資料處理愛好者俱樂部</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html"><i class="bi bi-list-ol"></i> 一維資料
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="sets.html"><i class="bi bi-intersect"></i> 集合運算
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="vlookup.html"><i class="bi bi-search"></i> 資料查閱
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="zipcode.html"><i class="bi bi-geo-alt"></i> 郵遞區號
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fstring.html"><i class="bi bi-braces"></i> 字串格式化
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="dataparsing.html"><i class="bi bi-filetype-csv"></i> CSV 剖析
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="sublime.html" target="_blank"><i class="bi bi-pencil-square"></i> 編輯器
+              </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container" id="mainArea">
+
+    <div class="mb-4"></div>
+
+    <div class="row">
+      <div class="col-lg-12 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#"><i class="bi bi-filetype-csv text-primary"></i> CSV 原始資料</a>
+            </h4>
+            <textarea class="form-control" rows="8" id="csvRaw" spellcheck="false" autofocus>姓名,部門,城市
+Alice,Engineering,Taipei
+Bob,Marketing,Kaohsiung
+Charlie,Engineering,Tainan
+David,Sales,Taipei
+Eve,Marketing,Taichung</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-lg-12">
+        <div class="form-group row mt-3 mb-0">
+          <label class="col-sm-1 col-form-label">分隔符號</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="delimiterSelect">
+              <option value="," selected>逗號 (,)</option>
+              <option value="&#9;">Tab</option>
+              <option value=";">分號 (;)</option>
+              <option value="|">管線 (|)</option>
+              <option value=" ">空白 ( )</option>
+              <option value="custom">自訂...</option>
+            </select>
+          </div>
+          <div class="col-sm-2" id="customDelimiterGroup" style="display:none;">
+            <input type="text" class="form-control" id="customDelimiter" placeholder="輸入自訂分隔符號">
+          </div>
+          <div class="col-sm-2">
+            <div class="form-check mt-2">
+              <input class="form-check-input" type="checkbox" id="hasHeader" checked>
+              <label class="form-check-label" for="hasHeader">第一行為標題</label>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-check mt-2">
+              <input class="form-check-input" type="checkbox" id="quoteWrap">
+              <label class="form-check-label" for="quoteWrap">匯出加雙引號</label>
+            </div>
+          </div>
+        </div>
+        <button id="parseBtn" class="btn btn-primary mt-2"><i class="bi bi-table"></i> 剖析 CSV</button>
+        <button id="exportBtn" class="btn btn-success mt-2" disabled><i class="bi bi-download"></i> 匯出選取欄位</button>
+        <button id="swapBtn" class="btn btn-warning mt-2" disabled><i class="bi bi-arrow-left-right"></i> 互換欄位</button>
+      </div>
+    </div>
+
+    <!-- Column selection area -->
+    <div class="row" id="columnControls" style="display:none;">
+      <div class="col-lg-12 portfolio-item">
+        <div class="card border-info">
+          <div class="card-body">
+            <h5 class="card-title"><i class="bi bi-check2-square text-info"></i> 欄位操作
+              <button id="selectAllBtn" class="btn btn-sm btn-outline-info ml-2">全選</button>
+              <button id="deselectAllBtn" class="btn btn-sm btn-outline-secondary ml-1">全部取消</button>
+            </h5>
+            <div id="columnCheckboxes" class="d-flex flex-wrap"></div>
+            <div class="mt-2">
+              <small class="text-muted"><i class="bi bi-info-circle"></i> 勾選欄位後點「匯出選取欄位」；選擇兩個欄位後可「互換欄位」</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parsed result table -->
+    <div class="row">
+      <div class="col-lg-12 portfolio-item">
+        <div class="card h-100 border-primary">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#"><i class="bi bi-table text-success"></i> 剖析結果</a>
+              <small class="text-muted ml-2" id="parseSummary"></small>
+            </h4>
+            <div id="topScrollbar" style="max-width:100%;"><div></div></div>
+            <div class="table-responsive" style="overflow-x:auto; max-width:100%;" id="tableContainer">
+              <p class="text-muted">請輸入 CSV 資料後點擊「剖析 CSV」</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export result -->
+    <div class="row" id="exportArea" style="display:none;">
+      <div class="col-lg-12 portfolio-item">
+        <div class="card h-100 border-success">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#"><i class="bi bi-file-earmark-check text-success"></i> 匯出結果</a>
+            </h4>
+            <textarea class="form-control" rows="8" id="exportResult" readonly></textarea>
+            <button id="downloadCsvBtn" class="btn btn-outline-success mt-2"><i class="bi bi-download"></i> 下載 CSV 檔案</button>
+            <button id="copyExportBtn" class="btn btn-outline-info mt-2"><i class="bi bi-clipboard"></i> 複製到剪貼簿</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-3 bg-dark">
+    <div class="container text-white">
+      <a class="text-info font-weight-bold" href="https://sdwh.github.io/about"><i class="bi bi-person-circle"></i> About Developer</a> /
+      <a class="text-info font-weight-bold" href="https://github.com/sdwh/DataHelper"><i class="bi bi-github"></i> Github</a>
+      <div class="float-right">
+        Update: 2026-06-10
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/sweetalert/sweetalert.min.js"></script>
+  <script src="vendor/lodash/lodash.min.js"></script>
+  <script src="./js/jquery.hotkeys.js"></script>
+  <script src="./js/papaparse.min.js"></script>
+  <script>
+    var pageLock = "page/dataparsing";
+  </script>
+  <script>
+    $(document).ready(function () {
+      var parsedData = [];
+      var headers = [];
+
+      // Delimiter select toggle
+      $('#delimiterSelect').on('change', function () {
+        if ($(this).val() === 'custom') {
+          $('#customDelimiterGroup').show();
+        } else {
+          $('#customDelimiterGroup').hide();
+        }
+      });
+
+      function getDelimiter() {
+        var sel = $('#delimiterSelect').val();
+        if (sel === 'custom') {
+          return $('#customDelimiter').val() || ',';
+        }
+        return sel;
+      }
+
+      // Select all / deselect all
+      $(document).on('click', '#selectAllBtn', function () {
+        $('.col-check').prop('checked', true);
+      });
+      $(document).on('click', '#deselectAllBtn', function () {
+        $('.col-check').prop('checked', false);
+      });
+
+      // Parse CSV
+      $('#parseBtn').on('click', function () {
+        var raw = $('#csvRaw').val().trim();
+        if (!raw) return;
+
+        var delimiter = getDelimiter();
+        var hasHeader = $('#hasHeader').is(':checked');
+
+        var result = Papa.parse(raw, {
+          delimiter: delimiter,
+          header: false,
+          skipEmptyLines: true
+        });
+
+        var rows = result.data;
+        if (rows.length === 0) return;
+
+        if (hasHeader) {
+          headers = rows[0].map(function (h) { return h.trim(); });
+          parsedData = rows.slice(1);
+        } else {
+          headers = rows[0].map(function (_, i) { return '欄位 ' + (i + 1); });
+          parsedData = rows;
+        }
+
+        renderTable();
+        renderColumnControls();
+        $('#exportBtn').prop('disabled', false);
+        $('#swapBtn').prop('disabled', false);
+        $('#columnControls').show();
+        $('#parseSummary').text('共 ' + parsedData.length + ' 筆資料，' + headers.length + ' 個欄位');
+      });
+
+      function renderTable() {
+        var html = '<table class="table table-bordered table-hover table-sm" id="parsedTable">';
+        // Header
+        html += '<thead class="thead-dark"><tr>';
+        headers.forEach(function (h, i) {
+          var colData = parsedData.map(function (row) { return (row[i] || '').trim(); }).filter(Boolean);
+          var uniqueCount = _.uniq(colData).length;
+          html += '<th class="col-header" data-col="' + i + '">';
+          html += '<span>' + _.escape(h) + '</span>';
+          html += ' <span class="badge badge-light col-badge">' + colData.length + '項';
+          if (uniqueCount !== colData.length) {
+            html += ' / 不重複' + uniqueCount;
+          }
+          html += '</span>';
+          html += ' <i class="bi bi-clipboard ml-1" title="複製此欄位所有值"></i>';
+          html += '</th>';
+        });
+        html += '</tr></thead>';
+        // Body
+        html += '<tbody>';
+        parsedData.forEach(function (row) {
+          html += '<tr>';
+          headers.forEach(function (h, i) {
+            html += '<td>' + window._.escape((row[i] || '').trim()) + '</td>';
+          });
+          html += '</tr>';
+        });
+        html += '</tbody></table>';
+        $('#tableContainer').html(html);
+        // Sync top scrollbar width
+        var tableWidth = $('#tableContainer')[0].scrollWidth;
+        $('#topScrollbar > div').width(tableWidth);
+        // Sync scroll positions
+        var syncing = false;
+        $('#topScrollbar').off('scroll').on('scroll', function () {
+          if (!syncing) {
+            syncing = true;
+            $('#tableContainer').scrollLeft($(this).scrollLeft());
+            syncing = false;
+          }
+        });
+        $('#tableContainer').off('scroll').on('scroll', function () {
+          if (!syncing) {
+            syncing = true;
+            $('#topScrollbar').scrollLeft($(this).scrollLeft());
+            syncing = false;
+          }
+        });
+      }
+
+      function renderColumnControls() {
+        var html = '';
+        headers.forEach(function (h, i) {
+          html += '<label class="mr-3 mb-1"><input type="checkbox" class="col-check" value="' + i + '" checked> ' + window._.escape(h) + '</label>';
+        });
+        $('#columnCheckboxes').html(html);
+      }
+
+      // Copy column to clipboard
+      $(document).on('click', '.col-header', function () {
+        var colIndex = $(this).data('col');
+        var colValues = parsedData.map(function (row) { return (row[colIndex] || '').trim(); }).filter(Boolean);
+        var text = colValues.join('\n');
+
+        navigator.clipboard.writeText(text).then(function () {
+          swal('已複製', headers[colIndex] + ' 的 ' + colValues.length + ' 筆資料已複製到剪貼簿', 'success');
+        }).catch(function () {
+          // Fallback
+          var $temp = $('<textarea>');
+          $('body').append($temp);
+          $temp.val(text).select();
+          document.execCommand('copy');
+          $temp.remove();
+          swal('已複製', headers[colIndex] + ' 的 ' + colValues.length + ' 筆資料已複製到剪貼簿', 'success');
+        });
+      });
+
+      // Export selected columns
+      $('#exportBtn').on('click', function () {
+        var selectedCols = [];
+        $('.col-check:checked').each(function () {
+          selectedCols.push(parseInt($(this).val()));
+        });
+
+        if (selectedCols.length === 0) {
+          swal('提示', '請至少勾選一個欄位', 'warning');
+          return;
+        }
+
+        var delimiter = getDelimiter();
+        var useQuote = $('#quoteWrap').is(':checked');
+        var lines = [];
+
+        function wrapVal(val) {
+          if (useQuote) return '"' + val.replace(/"/g, '""') + '"';
+          return val;
+        }
+
+        // Header line
+        if ($('#hasHeader').is(':checked')) {
+          lines.push(selectedCols.map(function (i) { return wrapVal(headers[i]); }).join(delimiter));
+        }
+
+        // Data lines
+        parsedData.forEach(function (row) {
+          lines.push(selectedCols.map(function (i) { return wrapVal((row[i] || '').trim()); }).join(delimiter));
+        });
+
+        var result = lines.join('\n');
+        $('#exportResult').val(result);
+        $('#exportArea').show();
+        // Scroll to export area
+        $('html, body').animate({ scrollTop: $('#exportArea').offset().top }, 300);
+      });
+
+      // Download CSV
+      $(document).on('click', '#downloadCsvBtn', function () {
+        var content = $('#exportResult').val();
+        if (!content) return;
+        var BOM = '\uFEFF';
+        var blob = new Blob([BOM + content], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'export.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+
+      // Copy export result to clipboard
+      $(document).on('click', '#copyExportBtn', function () {
+        var content = $('#exportResult').val();
+        if (!content) return;
+        navigator.clipboard.writeText(content).then(function () {
+          swal('已複製', '匯出結果已複製到剪貼簿', 'success');
+        }).catch(function () {
+          var $temp = $('<textarea>');
+          $('body').append($temp);
+          $temp.val(content).select();
+          document.execCommand('copy');
+          $temp.remove();
+          swal('已複製', '匯出結果已複製到剪貼簿', 'success');
+        });
+      });
+
+      // Swap columns
+      $('#swapBtn').on('click', function () {
+        var selectedCols = [];
+        $('.col-check:checked').each(function () {
+          selectedCols.push(parseInt($(this).val()));
+        });
+
+        if (selectedCols.length !== 2) {
+          swal('提示', '請勾選恰好兩個欄位以進行互換', 'warning');
+          return;
+        }
+
+        var colA = selectedCols[0];
+        var colB = selectedCols[1];
+
+        // Swap headers
+        var tempHeader = headers[colA];
+        headers[colA] = headers[colB];
+        headers[colB] = tempHeader;
+
+        // Swap data
+        parsedData.forEach(function (row) {
+          var temp = row[colA];
+          row[colA] = row[colB];
+          row[colB] = temp;
+        });
+
+        renderTable();
+        renderColumnControls();
+        swal('完成', '欄位「' + headers[colB] + '」與「' + headers[colA] + '」已互換', 'success');
+      });
+    });
+  </script>
+</body>
+
+</html>
