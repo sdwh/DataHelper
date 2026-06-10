@@ -343,9 +343,12 @@ $(document).ready(function () {
         var res = '';
         datas.forEach(row => {
             let current = template;
-            row.split(',').forEach(e => {
-                current = current.replace('{}', e.trim())
+            const fields = row.split(',').map(e => e.trim());
+            fields.forEach(e => {
+                current = current.replace('{}', e);
             });
+            const lastField = fields[fields.length - 1];
+            current = current.replace(/\{\}/g, lastField);
             res += current + '\n';
         });
         $('#result').val(res);
