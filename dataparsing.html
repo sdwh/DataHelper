@@ -161,8 +161,7 @@ Eve,Marketing,Taichung</textarea>
           </div>
         </div>
         <button id="parseBtn" class="btn btn-primary mt-2"><i class="bi bi-table"></i> 剖析 CSV</button>
-        <button id="exportBtn" class="btn btn-success mt-2" disabled><i class="bi bi-download"></i> 匯出選取欄位</button>
-        <button id="swapBtn" class="btn btn-warning mt-2" disabled><i class="bi bi-arrow-left-right"></i> 互換欄位</button>
+        <button id="flattenBtn" class="btn btn-secondary mt-2"><i class="bi bi-arrow-down-short"></i> 降維剖析</button>
       </div>
     </div>
 
@@ -197,6 +196,10 @@ Eve,Marketing,Taichung</textarea>
             <div class="table-responsive" style="overflow-x:auto; max-width:100%;" id="tableContainer">
               <p class="text-muted">請輸入 CSV 資料後點擊「剖析 CSV」</p>
             </div>
+            <div class="mt-2">
+              <button id="exportBtn" class="btn btn-success" disabled><i class="bi bi-download"></i> 匯出選取欄位</button>
+              <button id="swapBtn" class="btn btn-warning" disabled><i class="bi bi-arrow-left-right"></i> 互換欄位</button>
+            </div>
           </div>
         </div>
       </div>
@@ -213,6 +216,42 @@ Eve,Marketing,Taichung</textarea>
             <textarea class="form-control" rows="8" id="exportResult" readonly></textarea>
             <button id="downloadCsvBtn" class="btn btn-outline-success mt-2"><i class="bi bi-download"></i> 下載 CSV 檔案</button>
             <button id="copyExportBtn" class="btn btn-outline-info mt-2"><i class="bi bi-clipboard"></i> 複製到剪貼簿</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flatten result -->
+    <div class="row" id="flattenArea" style="display:none;">
+      <div class="col-lg-12 portfolio-item">
+        <div class="card h-100 border-warning">
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#"><i class="bi bi-arrow-down-short text-warning"></i> 降維剖析結果</a>
+              <small class="text-muted ml-2" id="flattenSummary"></small>
+            </h4>
+            <!-- Filter controls -->
+            <div class="mb-3 p-2 border rounded bg-light" id="flattenFilters">
+              <strong class="mr-2"><i class="bi bi-funnel"></i> 篩選過濾：</strong>
+              <button class="btn btn-sm btn-outline-primary mr-1 mb-1 flatten-filter-btn" data-filter="all">全部保留</button>
+              <button class="btn btn-sm btn-outline-primary mr-1 mb-1 flatten-filter-btn" data-filter="chinese">只保留中文</button>
+              <button class="btn btn-sm btn-outline-primary mr-1 mb-1 flatten-filter-btn" data-filter="english">只保留英文</button>
+              <button class="btn btn-sm btn-outline-primary mr-1 mb-1 flatten-filter-btn" data-filter="number">只保留數字</button>
+              <button class="btn btn-sm btn-outline-primary mr-1 mb-1 flatten-filter-btn" data-filter="email">只保留 Email</button>
+              <button class="btn btn-sm btn-outline-primary mr-1 mb-1 flatten-filter-btn" data-filter="phone">只保留電話</button>
+              <button class="btn btn-sm btn-outline-primary mr-1 mb-1 flatten-filter-btn" data-filter="url">只保留網址</button>
+              <button class="btn btn-sm btn-outline-secondary mr-1 mb-1" id="flattenCustomRegexBtn">自訂 Regex</button>
+              <div class="mt-2" id="flattenCustomRegexGroup" style="display:none;">
+                <div class="input-group input-group-sm" style="max-width:400px;">
+                  <input type="text" class="form-control" id="flattenCustomRegex" placeholder="例如: ^\d{6}$ 篩選6位數字">
+                  <div class="input-group-append">
+                    <button class="btn btn-secondary flatten-filter-btn" data-filter="custom">套用</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <textarea class="form-control" rows="10" id="flattenResult" readonly></textarea>
+            <button id="copyFlattenBtn" class="btn btn-outline-info mt-2"><i class="bi bi-clipboard"></i> 複製到剪貼簿</button>
           </div>
         </div>
       </div>
@@ -482,6 +521,103 @@ Eve,Marketing,Taichung</textarea>
         renderTable();
         renderColumnControls();
         swal('完成', '欄位「' + headers[colB] + '」與「' + headers[colA] + '」已互換', 'success');
+      });
+
+      // --- Flatten / Reduce Dimension ---
+      var flattenedData = [];
+
+      $('#flattenBtn').on('click', function () {
+        var raw = $('#csvRaw').val();
+        if (!raw.trim()) return;
+
+        var lines = raw.split('\n');
+        flattenedData = [];
+        lines.forEach(function (line) {
+          var cells = line.split('\t');
+          cells.forEach(function (cell) {
+            var val = cell.trim();
+            if (val) flattenedData.push(val);
+          });
+        });
+
+        renderFlatten(flattenedData);
+        $('#flattenArea').show();
+        $('html, body').animate({ scrollTop: $('#flattenArea').offset().top }, 300);
+      });
+
+      function renderFlatten(data) {
+        $('#flattenResult').val(data.join('\n'));
+        $('#flattenSummary').text('共 ' + data.length + ' 筆 / 不重複 ' + window._.uniq(data).length + ' 筆');
+      }
+
+      // Flatten filter buttons
+      $(document).on('click', '.flatten-filter-btn', function () {
+        var filter = $(this).data('filter');
+        var filtered = [];
+        var regex;
+
+        switch (filter) {
+          case 'all':
+            filtered = flattenedData;
+            break;
+          case 'chinese':
+            regex = /[\u4e00-\u9fff]/;
+            filtered = flattenedData.filter(function (v) { return regex.test(v); });
+            break;
+          case 'english':
+            regex = /^[a-zA-Z\s]+$/;
+            filtered = flattenedData.filter(function (v) { return regex.test(v); });
+            break;
+          case 'number':
+            regex = /^[\d.\-+]+$/;
+            filtered = flattenedData.filter(function (v) { return regex.test(v); });
+            break;
+          case 'email':
+            regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            filtered = flattenedData.filter(function (v) { return regex.test(v); });
+            break;
+          case 'phone':
+            regex = /^[\d\-+()\s]{7,}$/;
+            filtered = flattenedData.filter(function (v) { return regex.test(v); });
+            break;
+          case 'url':
+            regex = /^(https?:\/\/|www\.)/i;
+            filtered = flattenedData.filter(function (v) { return regex.test(v); });
+            break;
+          case 'custom':
+            var pattern = $('#flattenCustomRegex').val();
+            if (!pattern) { swal('提示', '請輸入正則表達式', 'warning'); return; }
+            try {
+              regex = new RegExp(pattern);
+            } catch (e) {
+              swal('錯誤', 'Regex 語法不正確: ' + e.message, 'error');
+              return;
+            }
+            filtered = flattenedData.filter(function (v) { return regex.test(v); });
+            break;
+        }
+        renderFlatten(filtered);
+      });
+
+      // Toggle custom regex input
+      $('#flattenCustomRegexBtn').on('click', function () {
+        $('#flattenCustomRegexGroup').toggle();
+      });
+
+      // Copy flatten result
+      $(document).on('click', '#copyFlattenBtn', function () {
+        var content = $('#flattenResult').val();
+        if (!content) return;
+        navigator.clipboard.writeText(content).then(function () {
+          swal('已複製', '降維剖析結果已複製到剪貼簿', 'success');
+        }).catch(function () {
+          var $temp = $('<textarea>');
+          $('body').append($temp);
+          $temp.val(content).select();
+          document.execCommand('copy');
+          $temp.remove();
+          swal('已複製', '降維剖析結果已複製到剪貼簿', 'success');
+        });
       });
     });
   </script>
